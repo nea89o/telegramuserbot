@@ -6,6 +6,7 @@ from lib import *
 @name('eval')
 @description('evals a given piece of python code')
 def eval_command(ctx: CommandContext):
+    ctx.edit("```\n%s\n```" % ctx.rest_content)
     try:
         block = ast.parse(ctx.rest_content, mode='exec')
         last = ast.Expression(block.body.pop().value)
@@ -23,7 +24,7 @@ def eval_command(ctx: CommandContext):
         'client': ctx.client,
         'print':
             lambda *content, stdout=False:
-                print(*content)
+            print(*content)
             if stdout
             else ctx.respond('\t'.join(map(str, content)))
     }
